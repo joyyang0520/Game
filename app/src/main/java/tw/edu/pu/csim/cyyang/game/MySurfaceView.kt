@@ -1,6 +1,6 @@
 package tw.edu.pu.csim.cyyang.game
 
-import android.app.Service
+
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
@@ -16,10 +16,10 @@ SurfaceHolder.Callback{
     init {
         surfaceHolder = getHolder()
         BG = BitmapFactory.decodeResource(getResources(), R.drawable.background)
+        //btnStart = BitmapFactory.decodeResource(getResources(), R.drawable.start)
         surfaceHolder.addCallback(this)
 
     }
-
 
     override fun surfaceCreated(p0: SurfaceHolder) {
         var canvas: Canvas = surfaceHolder.lockCanvas()
@@ -38,13 +38,17 @@ SurfaceHolder.Callback{
 
     fun drawSomething(canvas:Canvas) {
         //canvas.drawBitmap(BG, 0f, 0f, null)
-        var DestRect:Rect = Rect(0, 0,1920 , 1080)
-        canvas.drawBitmap (BG, null, DestRect, null)
+        var SrcRect:Rect = Rect(0, 0,BG.width, BG.height)
+        var w:Int = width
+        var h:Int = height
+        var DestRect: Rect = Rect(0, 0, w, h)
+        canvas.drawBitmap (BG, SrcRect, DestRect, null)
 
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
         paint.color = Color.BLUE
         paint.textSize = 50f
         canvas.drawText("射擊遊戲(作者：楊喬茵)",50f,50f,paint)
-        
+
+
     }
 }
