@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity() {
                 job = GlobalScope.launch(Dispatchers.Main) {
                     while(flag) {
                         delay(10)
+                        mysv.player.update()
+                       // mysv.player.update()
                         var canvas: Canvas = mysv.surfaceHolder.lockCanvas()
                         mysv.drawSomething(canvas)
                         mysv.surfaceHolder.unlockCanvasAndPost(canvas)
