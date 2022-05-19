@@ -17,6 +17,7 @@ class player(context: Context) {
     lateinit var SrcRect: Rect
     lateinit var DestRect: Rect
     var count : Int = 1
+    var shoot : Int = 0
 
 init {
     player = BitmapFactory.decodeResource(res, R.drawable.fly1)
@@ -32,13 +33,28 @@ fun draw(canvas: Canvas) {
 }
 
 fun update(){
-    if (count==1){
-        count = 2
-        player = BitmapFactory.decodeResource(res, R.drawable.fly2)
+    if (shoot == 0){
+        if (count==1){
+            count = 2
+            player = BitmapFactory.decodeResource(res, R.drawable.fly2)
+        }
+        else{
+            count = 1
+            player = BitmapFactory.decodeResource(res, R.drawable.fly1)
+        }
     }
     else{
-        count = 1
-        player = BitmapFactory.decodeResource(res, R.drawable.fly1)
+        when(shoot){
+            1 -> player = BitmapFactory.decodeResource(res, R.drawable.shoot1)
+            2 -> player = BitmapFactory.decodeResource(res, R.drawable.shoot2)
+            3 -> player = BitmapFactory.decodeResource(res, R.drawable.shoot3)
+            4 -> player = BitmapFactory.decodeResource(res, R.drawable.shoot4)
+            5 -> player = BitmapFactory.decodeResource(res, R.drawable.shoot5)
+        }
+        shoot++
+        if (shoot>5){
+            shoot = 0
+        }
     }
 }
 }

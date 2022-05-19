@@ -2,6 +2,7 @@ package tw.edu.pu.csim.cyyang.game
 
 import android.content.Context
 import android.graphics.*
+import android.media.MediaPlayer
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -18,6 +19,7 @@ class MySurfaceView(context: Context?, attrs: AttributeSet?) : SurfaceView(conte
     var BGmove:Int = 0
     var player:player
     var gDetector: GestureDetector
+    var sound: MediaPlayer
 
     init {
         surfaceHolder = getHolder()
@@ -26,6 +28,7 @@ class MySurfaceView(context: Context?, attrs: AttributeSet?) : SurfaceView(conte
         surfaceHolder.addCallback(this)
         player = player(context!!)
         gDetector = GestureDetector(context, this)
+        sound = MediaPlayer()
 
     }
 
@@ -78,8 +81,13 @@ class MySurfaceView(context: Context?, attrs: AttributeSet?) : SurfaceView(conte
         return true
     }
 
-    override fun onShowPress(p0: MotionEvent?) {
+    override fun onShowPress(a: MotionEvent?) {
 
+        if (a!!.x >= 0 && a!!.x <= player.w && a!!.y >= player.y && a!!.y <= player.y + player.w) {
+            player.shoot = 1
+            sound = MediaPlayer.create(context, R.raw.shoot)
+            sound.start()
+        }
     }
 
     override fun onSingleTapUp(p0: MotionEvent?): Boolean {
