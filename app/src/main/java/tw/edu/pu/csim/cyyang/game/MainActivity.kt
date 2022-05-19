@@ -5,14 +5,20 @@ import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 import kotlinx.coroutines.*
+
+@GlideModule
+public final class MyAppGlideModule : AppGlideModule()
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var img : ImageView
+    lateinit var imgbtn : ImageView
     lateinit var mysv : MySurfaceView
     var flag:Boolean = false
     lateinit var job : Job
+    lateinit var imgme : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,18 +26,26 @@ class MainActivity : AppCompatActivity() {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
 
-        img = findViewById(R.id.img)
+        imgbtn = findViewById(R.id.imgbtn)
         mysv = findViewById(R.id.mysv)
 
-        img.setOnClickListener({
+        imgme = findViewById(R.id.imgme)
+        GlideApp.with(this)
+            //.load(R.drawable.earth)
+            .load(R.drawable.photo)
+            .circleCrop()
+            .override(800, 600)
+            .into(imgme)
+
+        imgbtn.setOnClickListener({
             if (flag){
                 flag = false
-                img.setImageResource(R.drawable.start)
+                imgbtn.setImageResource(R.drawable.start)
                 job.cancel()
             }
             else{
                 flag = true
-                img.setImageResource(R.drawable.stop)
+                imgbtn.setImageResource(R.drawable.stop)
                 job = GlobalScope.launch(Dispatchers.Main) {
                     while(flag) {
                         delay(10)
